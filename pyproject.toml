@@ -1,0 +1,100 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "TeleDM"
+version = "1.0.0"
+description = "A Telegram Download Manager with a GUI, for when the file is too large and you just can't keep the tab in focus"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "ADPer", email = "adper0705@gmail.com"}
+]
+keywords = ["telegram", "download manager", "asyncio", "tkinter", "gui", "cli"]
+classifiers = [
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Communications :: Chat",
+    "Topic :: Internet :: File Transfer Protocol (FTP)",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "cryptg==0.5.2",
+    "platformdirs==4.2.2",
+    "pyaes==1.6.1",
+    "pyasn1==0.6.0",
+    "rsa==4.9",
+    "Telethon==1.34.0",
+    "aiosqlite==0.20.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "black",
+]
+
+[project.urls]
+Homepage = "https://github.com/ADPer0705/telegram-download-manager"
+Repository = "https://github.com/ADPer0705/telegram-download-manager"
+Issues = "https://github.com/ADPer0705/telegram-download-manager/issues"
+
+# This is the new section that makes it a CLI tool
+[project.scripts]
+teledm = "TeleDM.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["tests*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py38", "py39", "py310", "py311", "py312"]
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+extend-exclude = [".git", ".venv", "build", "dist"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # Pyflakes
+    "I",    # isort
+    "C",    # flake8-comprehensions
+    "B",    # flake8-bugbear
+    "UP",   # pyupgrade
+    "ARG",  # flake8-unused-arguments
+    "SIM",  # flake8-simplify
+]
+ignore = [
+    "E501",  # line-too-long (handled by black)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["TeleDM"] # Changed this from "src" to your package name

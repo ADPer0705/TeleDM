@@ -1,15 +1,15 @@
-# 🚀 Telegram Download Manager
+# 🚀 Telegram Download Manager v1.0.0
 
 <div align="center">
 
-![Telegram Download Manager](https://img.shields.io/badge/Telegram-Download_Manager-2CA5E0?style=for-the-badge&logo=telegram)
 ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python)
 ![Tkinter](https://img.shields.io/badge/GUI-Tkinter-FF6B35?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+[![PyPI version](https://badge.fury.io/py/TeleDM.svg)](https://badge.fury.io/py/TeleDM)
 
-**The coolest way to download files from Telegram!** 🎉
+**The "No need to keep the tab in focus" way to download files from Telegram!** 🎉
 
-[📥 Download](#quick-start) • [📚 Documentation](DOCS.md) • [🐛 Report Issues](https://github.com/ADPer0705/telegram-download-manager/issues)
+[📥 Download](#-installation) • [📚 Documentation](#-documentation) • [🐛 Report Issues](https://github.com/ADPer0705/telegram-download-manager/issues)
 
 ---
 
@@ -17,7 +17,9 @@
 
 ## ✨ Why Choose Telegram Download Manager?
 
-🎯 **Multiple Authentication Methods** - Choose what works best for you!  
+We've all been there -- You want to download a movie, a project file, a course file, or something that's gonna take a while to download, so you just start the download and leave the tab in focus and go to sleep or lunch or whatever. And if you do not, half the times it just stops downloading soon after it looses focus.
+
+### What TeleDM has to offer
 ⚡ **Lightning Fast Downloads** - Queue management with progress tracking  
 🔄 **Resume Interrupted Downloads** - Never lose progress again  
 💾 **Smart Database** - Persistent download history and queue state  
@@ -29,9 +31,7 @@
 
 | Feature | Description |
 |---------|-------------|
-| 🤖 **Bot Token Support** | Easy setup with Telegram bots |
 | 🔑 **API Credentials** | Full access to all your files |
-| 🎮 **Demo Mode** | Test without any setup |
 | 📊 **Progress Tracking** | Real-time download progress |
 | 🔄 **Resume Downloads** | Continue interrupted downloads |
 | 📋 **Queue Management** | Handle multiple downloads efficiently |
@@ -40,102 +40,77 @@
 
 </div>
 
-## 🚀 Quick Start
+## 🚀 Quick Start & Usage
 
-<div align="center">
-
-### ⚡ Get Started in 3 Steps!
-
-</div>
-
-### 1️⃣ Install Dependencies
+### 1️⃣ Installation
 ```bash
-pip install -r requirements.txt
+make install
+```
+of for development
+```bash
+make install-dev
 ```
 
-### 2️⃣ Configure Authentication
+### 2️⃣ Configuration
+Before the first run, you need to set up your Telegram API credentials.
 ```bash
-cp config.ini.example config.ini
-# Edit config.ini - choose your preferred method below
+# Run the interactive configuration wizard
+teledm config
+```
+You will be prompted for your `API ID`, `API Hash`, and `Phone Number`. See [Getting API Credentials](#-getting-api-credentials) for more details.
+
+### 3️⃣ Running the Application
+Once configured, you can launch the GUI:
+```bash
+# Launch the GUI (default action)
+teledm
+
+# Or explicitly:
+teledm run
 ```
 
-### 3️⃣ Launch the App
+### 4️⃣ Command-Line Help
+Get help and check your configuration right from the terminal.
 ```bash
-python main.py
+# See all available commands
+teledm --help
+
+# Show the installed version
+teledm --version
+
+# View current configuration and file paths
+teledm info
 ```
-
-<div align="center">
-
-🎉 **That's it! You're ready to download!**
-
-</div>
 
 ---
 
-## 🔐 Authentication Methods
+## 🔐 Getting API Credentials
 
-Choose the method that fits your needs:
+TeleDM uses Telegram's official API to access your files. Here's how to get your credentials:
 
-### 🤖 Bot Token (⭐ Recommended)
-<div align="center">
+1.  **Visit [my.telegram.org](https://my.telegram.org/)** and log in with your phone number.
+2.  Navigate to **"API development tools"**.
+3.  Create a new application (you can name it "TeleDM").
+4.  Note down your `api_id` and `api_hash`.
+5.  Run `teledm config` and enter these credentials when prompted.
 
-**Perfect for most users - No phone verification needed!**
-
-</div>
-
-```ini
-[telegram]
-bot_token = YOUR_BOT_TOKEN_HERE
-```
-
-**Setup:**
-1. Message [@BotFather](https://t.me/botfather) on Telegram
-2. Send `/newbot` and follow instructions
-3. Copy your bot token to `config.ini`
-4. **Done!** 🎯
-
-**Best for:** Public files, group downloads, easy sharing
+**Note:** Your credentials are a secret. They are stored locally in your user data directory and are never shared.
 
 ---
 
-### 🔑 API Credentials (Full Access)
-<div align="center">
+## 📍 File Locations
 
-**Complete access to all files you can see in Telegram**
+TeleDM stores its configuration, logs, and database in your user's data directory. You can find the exact paths by running `teledm info`.
 
-</div>
+-   **Configuration File**: `teledmcfg.ini`
+-   **Log File**: `teledmlog.log`
+-   **Database**: `teledmdb.db`
+-   **Session File**: `sessions/`
 
-```ini
-[telegram]
-api_id = YOUR_API_ID
-api_hash = YOUR_API_HASH
-phone = YOUR_PHONE_NUMBER
-```
-
-**Setup:**
-1. Visit [my.telegram.org](https://my.telegram.org/)
-2. Login and go to "API development tools"
-3. Create application and copy credentials
-4. Add to `config.ini`
-
-**Best for:** Private files, personal downloads, full control
-
----
-
-### 🎮 Demo Mode (Zero Setup)
-<div align="center">
-
-**Test the app without any credentials!**
-
-</div>
-
-```ini
-[telegram]
-demo_mode = true
-```
-
-**Setup:** Just uncomment the line above!  
-**Best for:** Testing, demos, trying out features
+Typical locations are:
+-   **Linux**: `~/.local/share/TeleDM/`
+-   **Windows**: `C:\\Users\\<YourUser>\\AppData\\Local\\ADPer\\TeleDM`
+-   **macOS**: `~/Library/Application Support/TeleDM/`
 
 ---
 
@@ -152,93 +127,118 @@ demo_mode = true
 ## 🏗️ Project Structure
 
 ```
-telegram_download_manager/
-├── 🎯 main.py              # Main GUI application
-├── 🤖 telegram_client.py   # User API client
-├── 🔧 bot_client.py        # Bot API & demo clients
-├── 📥 download_manager.py  # Download queue management
-├── 💾 database.py          # SQLite persistence
-├── ⚙️ config_manager.py    # Configuration handling
-├── 📝 logger.py            # Logging system
-├── 📋 config.ini.example   # Configuration template
-├── 📦 requirements.txt     # Python dependencies
-├── 📚 DOCS.md              # Detailed documentation
-└── 📄 README.md            # This file
+telegram-download-manager/
+├── src/TeleDM/           # Main package
+│   ├── main.py            # GUI application entry point
+│   ├── cli.py             # Command-line interface
+│   ├── configure.py       # Interactive configuration wizard
+│   ├── telegramClient.py  # Telegram API client
+│   ├── downloadManager.py # Download queue & progress
+│   ├── database.py        # SQLite persistence layer
+│   ├── utils.py           # Logging, config, and utilities
+│   ├── gui.py             # Tkinter GUI implementation
+│   └── __main__.py        # Package entry point
+├── docs/                  # Detailed documentation
+├── pyproject.toml         # Project metadata & dependencies
+└── README.md              # This file
 ```
 
 ---
 
-## 🎯 Usage Examples
+## 🔧 Advanced Configuration
 
-### Basic Download
-```bash
-python main.py
-# 1. Click "Connect"
-# 2. Enter file ID
-# 3. Click "Add Download"
-# 4. Watch progress!
-```
-
-### Batch Downloads
-- Add multiple file IDs
-- Queue manages concurrent downloads
-- Automatic retry on failures
-
-### Resume Downloads
-- Interrupted downloads resume automatically
-- No progress lost on network issues
-- Smart chunk-based resuming
-
----
-
-## 🔧 Configuration
-
-### Advanced Settings
+You can manually edit the `teledmcfg.ini` file (see [File Locations](#-file-locations)) for advanced settings.
 
 ```ini
 [downloads]
 download_path = ~/Downloads          # Where to save files (supports ~ for home directory)
-max_concurrent_downloads = 3         # Parallel downloads
-chunk_size = 1048576                 # Download chunk size
-retry_attempts = 5                   # Retry failed downloads
-retry_delay = 5                      # Delay between retries
+max_concurrent_downloads = 3         # Number of parallel downloads
+chunk_size = 1048576                 # Download chunk size in bytes (1MB)
+retry_attempts = 5                   # How many times to retry failed downloads
+retry_delay = 5                      # Seconds to wait between retries
 
 [logging]
-log_level = INFO                     # DEBUG, INFO, WARNING, ERROR
-log_file = logs/telegram_downloader.log
+log_level = INFO                     # INFO, WARNING, ERROR
 ```
-
-### Download Path Configuration
-
-- **Relative paths**: `./downloads`, `downloads/` 
-- **Absolute paths**: `/home/user/Downloads`, `C:\Downloads\`
-- **Home directory**: `~/Downloads` (automatically expanded)
-- **Environment variables**: Supported via shell expansion
-
-### Performance Tuning
-
-- **Concurrent Downloads**: Balance speed vs. bandwidth
-- **Chunk Size**: Larger = faster, smaller = more stable
-- **Retry Settings**: Adjust based on your connection
 
 ---
 
-## ❓ Quick FAQ
+## 💡 Tips & FAQ
 
-**Q: Which authentication method should I use?**  
-A: Start with **Bot Token** - it's easiest! Use API credentials for full access.
+### 🔍 How to Find Chat ID and Message ID
 
-**Q: Can I download private files?**  
-A: Yes, with API credentials. Bot tokens work with public files only.
+To download a file from Telegram, you need the **Chat ID** and **Message ID**. Here's how to get them:
 
-**Q: What file sizes are supported?**  
-A: API credentials: No limit. Bot tokens: Up to 20MB (Telegram limit).
+#### Method 1: Using @userinfobot (Recommended)
+
+1. **Search for `@userinfobot`** on Telegram and start a chat with it.
+
+2. **Get the Chat ID:**
+   - Forward any message from the channel/group/chat to `@userinfobot`
+   - The bot will reply with information including the Chat ID
+   - **Example output:**
+     ```
+     @offenciveSec
+     Id: -1001778292767
+     Title: Offensive-SEC
+     ```
+   - The Chat ID is the number: `-1001778292767` (**include the negative sign!**)
+
+3. **Get the Message ID:**
+   - Open the channel in your browser or desktop app
+   - Right-click on the message containing the file
+   - Look at the message link (e.g., `https://t.me/offenciveSec/1274`)
+   - The Message ID is the last number: `1274`
+
+#### Method 2: Using Web Telegram
+
+1. Open [web.telegram.org](https://web.telegram.org)
+2. Navigate to the channel/chat with the file
+3. Click on the message with the file
+4. Look at the URL in your browser: `https://web.telegram.org/k/#-1001778292767_1274`
+5. The Chat ID is `-1001778292767` and Message ID is `1274`
+
+#### Important Notes:
+
+- **Chat ID Format:**
+  - Public channels: Usually negative numbers like `-1001778292767`
+  - Private chats: Positive numbers
+  - **Always use the numeric ID, NEVER use the @username**
+  
+- **Message ID Format:**
+  - Just the number (e.g., `1274`)
+  - No special characters or prefixes
+
+- **File Name:**
+  - The file name is automatically detected from the message
+  - You don't need to enter it manually
+
+#### Example in TeleDM:
+
+```
+Chat ID: -1001778292767
+Message ID: 1274
+File Name: [Auto-detected]
+```
+
+---
+
+### Common Questions
+
+**Q: Can I download files from private channels?**  
+A: Yes, as long as you are a member of that channel. TeleDM accesses Telegram as you, so it can see everything you can.
 
 **Q: Does it resume interrupted downloads?**  
-A: Yes! Automatically resumes from where it left off.
+A: Yes! If a download is interrupted, it will automatically resume from where it left off the next time you run the app.
 
-**Q: Can I download multiple files?**  
-A: Absolutely! The queue handles multiple concurrent downloads.
+**Q: Where is the configuration file stored?**  
+A: Run `teledm info` to see the exact path on your system.
+
+**Q: Is it safe to enter my API credentials?**  
+A: Yes. Your credentials are stored locally on your machine and are only used to communicate with Telegram's official servers. They are never sent anywhere else.
+
+**Q: Why am I getting "invalid literal for int()" error?**  
+A: You're using the channel username (e.g., `@offenciveSec`) instead of the numeric Chat ID. Use `@userinfobot` to get the correct numeric ID (e.g., `-1001778292767`).
 
 ---
 
@@ -246,31 +246,32 @@ A: Absolutely! The queue handles multiple concurrent downloads.
 
 ### Requirements
 - Python 3.8+
-- Tkinter (usually included with Python)
-- Internet connection
+- An active internet connection
 
-### Running Tests
-```bash
-python -c "import main; print('✅ All good!')"
-```
+### Setup
+1.  Fork and clone the repository.
+2.  Create a virtual environment.
+3.  Install in editable mode with development dependencies:
+    ```bash
+    pip install -e .
+    ```
+4.  Run the configuration and the app:
+    ```bash
+    teledm config
+    teledm run
+    ```
 
 ### Contributing
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change. Please make sure to update tests as appropriate.
 
 ---
 
 ## 📈 Roadmap
 
 - [ ] 📸 Add screenshots and demo GIFs
-- [ ] 🌐 Web interface option
-- [ ] 📱 Mobile app version
-- [ ] 🔍 File search functionality
-- [ ] 📊 Download analytics
-- [ ] 🎨 Dark mode theme
+- [ ] � Dark mode and theme support
+- [ ] � In-app file search functionality
+- [ ] 📊 Download analytics and speed graphs
 - [ ] 🌍 Multi-language support
 
 ---
@@ -281,9 +282,8 @@ python -c "import main; print('✅ All good!')"
 
 **Need help? Found a bug? Have a suggestion?**
 
-🐛 [Report Issues](https://github.com/ADPer0705/telegram-download-manager/issues)  
-💬 [Discussions](https://github.com/ADPer0705/telegram-download-manager/discussions)  
-📧 [Contact](mailto:your.email@example.com)
+🐛 [Report an Issue](https://github.com/ADPer0705/telegram-download-manager/issues)  
+💬 [Start a Discussion](https://github.com/ADPer0705/telegram-download-manager/discussions)  
 
 </div>
 
